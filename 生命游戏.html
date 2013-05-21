@@ -24,7 +24,7 @@
 			<div>列数：<input type="text" id="lie" value="50"/>(最大长度有限制)</div>
 			<div>天长：<input type="text" id="dayTime" value="1000"/>毫秒</div>
 			<div>随机数:<input type="text" id="randNum" value="5" maxlength="2"/>(1~99)</div>
-			<div>条件：</div>
+			<div>转变条件：</div>
 			<div>自己不变：<input type="text" id="StillN1" value="2" maxlength="1"/>(1~8)</div>
 			<!-- <div>自己不变2：<input type="text" id="StillN2" value="2" maxlength="1"/>(1~8)</div> -->
 			<div>一定生存：<input type="text" id="LiveN1" value="3" maxlength="1"/>(1~8)</div>
@@ -50,6 +50,7 @@
 			var PageA;
 			var PageB;
 			var fireValue;
+			var lifeValue;
 			newParameter();
 
 /*-----------------------------------------------------------------------------
@@ -66,15 +67,14 @@ function start(){
 function DorL(){
 	var Friends=0;/*计数器*/
 	var str="";
-	if(fireValue == 1)
-	{		
-		firehang = document.getElementById("firehang").value *1;/*行数*/
-	    firelie =  document.getElementById("firelie").value *1;/*列数*/
-	    firearea =  document.getElementById("firearea").value *1;/*列数*/
-	    starthang = (firehang - firearea>=0)?(firehang - firearea):0;
-	    endhang = (firehang + firearea<=50)?(firehang + firearea):50;
-	    startlie = (firelie - firearea>=0)?(firelie - firearea):0;
-	    endlie = (firelie + firearea<=50)?(firelie + firearea):50;
+	if(fireValue == 1){		
+		ctlhang = document.getElementById("ctlhang").value *1;/*行数*/
+	    ctllie =  document.getElementById("ctllie").value *1;/*列数*/
+	    ctlarea =  document.getElementById("ctlarea").value *1;/*列数*/
+	    starthang = (ctlhang - ctlarea>=0)?(ctlhang - ctlarea):0;
+	    endhang = (ctlhang + ctlarea<=50)?(ctlhang + ctlarea):50;
+	    startlie = (ctllie - ctlarea>=0)?(ctllie - ctlarea):0;
+	    endlie = (ctllie + ctlarea<=50)?(ctllie + ctlarea):50;
 		for(var i = starthang; i < endhang; i++ ){
 			for(var j = startlie; j < endlie; j++ ){
 				PageA[i][j] = 0;
@@ -82,6 +82,22 @@ function DorL(){
 			}
 		}
 		fireValue = 0;
+    }
+    if(lifeValue == 1){
+    	ctlhang = document.getElementById("ctlhang").value *1;/*行数*/
+	    ctllie =  document.getElementById("ctllie").value *1;/*列数*/
+	    ctlarea =  document.getElementById("ctlarea").value *1;/*列数*/
+	    starthang = (ctlhang - ctlarea>=0)?(ctlhang - ctlarea):0;
+	    endhang = (ctlhang + ctlarea<=50)?(ctlhang + ctlarea):50;
+	    startlie = (ctllie - ctlarea>=0)?(ctllie - ctlarea):0;
+	    endlie = (ctllie + ctlarea<=50)?(ctllie + ctlarea):50;
+		for(var i = starthang; i < endhang; i++ ){
+			for(var j = startlie; j < endlie; j++ ){
+				PageA[i][j] = 1;
+				PageB[i][j] = 1;
+			}
+		}
+		lifeValue = 0;
     }
 	for(var i=0; i<hang; i++){
 		for(var j=0; j<lie; j++){
@@ -232,16 +248,19 @@ function newParameter(){
 function fire(){
 	fireValue = 1;
 }
+function life(){
+	lifeValue = 1;
+}
 </script>
 	<div id="Btn">
 		<input type="button" value="初始化参数" title="停止并初始化参数" onclick="clearInterval(kkk);newParameter();">
 		<input type="button"  value="开始" onclick="start();"/>
 		<input type="button"  value="停止" onclick="clearInterval(kkk);"/>
-		<div>火灾行数：<input type="text" id="firehang" value="25"/>(最大长度有限制)</div>
-		<div>火灾列数：<input type="text" id="firelie" value="25"/>(最大长度有限制)</div>
-		<div>火灾范围：<input type="text" id="firearea" value="10"/>(方圆)</div>
+		<div>控制行数：<input type="text" id="ctlhang" value="25"/>(最大长度有限制)</div>
+		<div>控制列数：<input type="text" id="ctllie" value="25"/>(最大长度有限制)</div>
+		<div>控制范围：<input type="text" id="ctlarea" value="10"/>(方圆)</div>
 		<div><button type="button" id="fire" onclick="fire();">火灾来了!</button></div>
-
+		<div><button type="button" id="life" onclick="life();">播撒生命!</button></div>
 	</div>
 </body>
 </html>
